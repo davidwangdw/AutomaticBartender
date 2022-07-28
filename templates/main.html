@@ -1,18 +1,37 @@
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-   <title>{{ title }}</title>
-   <!-- Latest compiled and minified CSS -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-   <!-- Optional theme -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-   <!-- Latest compiled and minified JavaScript -->
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <title>{{ title }}</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </head>
-
-   <body>
-      The date and time on the server is: {{ time }}
-      <br><br>
-      What would you like to order?
-   <a href="/rum-and-coke" class="btn btn-block btn-lg btn-default" role="button">Rum and coke</a></div></div>
-   </body>
+<body>
+    The date and time is currently: {{ time }} <br> <br>
+    Welcome to David's bar! We're glad to have you. Would you like a drink?
+    <br><br>
+    What would you like to order? <br> <br>
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td><a href="/rum-and-coke" class="btn btn-primary" role="button">Rum and coke</a></td>
+                <td>A classic</td>
+                <td>Ordered 10 times</td>
+            </tr>
+            <tr>
+                <td><a href="/rainforest" class="btn btn-primary" role="button">Rainforest</a></td>
+                <td>A taste of tropical paradise</td>
+                <td>Ordered 194 times</td>
+            </tr>
+            <tr>
+                <td><a href="/gin-and-tonic" class="btn btn-primary" role="button">Gin and Tonic</a></td>
+                <td>If you like the taste of pine cones</td>
+                <td>Ordered 5 times</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
 </html>

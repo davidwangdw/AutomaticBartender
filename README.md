@@ -1,19 +1,21 @@
-How to get this set up on a fresh Rasperry Pi:
+How to get this set up on a fresh Raspberry Pi:
 
-Install Python and Flask
+1. Install the OS using the official tool - make sure to configure it with WiFi and SSH
+
+Install Python and Flask, clone repo
 ```
-sudo apt-get install python-pip
+mkdir projects
+cd projects
+sudo apt-get install python3-pip -y
 sudo pip install flask
+git clone https://github.com/davidwangdw/AutomaticBartender.git
+cd AutomaticBartender
+sudo python3 app.py
 ```
 
-Clone repo
-```commandline
-clone repo
-```
+This starts the application at whatever IP address the Pi is currently at. To get updates and run again:
 
-Find Raspberry Pi's IP address
-```commandline
-ifconfig 
 ```
-
-gh auth login
+git pull
+sudo python3 app.py
+```
