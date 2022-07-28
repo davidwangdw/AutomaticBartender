@@ -31,9 +31,9 @@ web_title = "Welcome to 409!"
 @app.route("/")
 def index():
     now = datetime.datetime.now()
-    GPIO.output(23, GPIO.HIGH)
-    GPIO.output(24, GPIO.HIGH)
-    GPIO.output(25, GPIO.HIGH)
+    GPIO.output(23, GPIO.LOW)
+    GPIO.output(24, GPIO.LOW)
+    GPIO.output(25, GPIO.LOW)
     time_string = now.strftime("%Y-%m-%d %H:%M")
     template_data = {
         'title': web_title,
