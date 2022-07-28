@@ -1,7 +1,20 @@
 from flask import Flask, render_template, redirect
 import datetime
+import RPi.GPIO as GPIO
 
 app = Flask(__name__)
+GPIO.setmode(GPIO.BCM)
+
+# Create a dictionary called pins to store the pin number, name, and pin state:
+pins = {
+    23: {'name': 'GPIO 23', 'state': GPIO.LOW},
+    24: {'name': 'GPIO 24', 'state': GPIO.LOW},
+    25: {'name': 'GPIO 25', 'state': GPIO.LOW}
+}
+
+for pin in pins:
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, GPIO.LOW)
 
 # http://mattrichardson.com/Raspberry-Pi-Flask/
 # https://learn.adafruit.com/adafruit-keg-bot?view=all
@@ -18,6 +31,9 @@ web_title = "Welcome to 409!"
 @app.route("/")
 def index():
     now = datetime.datetime.now()
+    GPIO.output(23, GPIO.HIGH)
+    GPIO.output(24, GPIO.HIGH)
+    GPIO.output(25, GPIO.HIGH)
     time_string = now.strftime("%Y-%m-%d %H:%M")
     template_data = {
         'title': web_title,
@@ -29,6 +45,7 @@ def index():
 @app.route("/confirmation/<drink>")
 def confirmation(drink):
     if drink == 'rum-and-coke':
+        GPIO.output(23, GPIO.HIGH)
         template_data = {
             'title': web_title,
             'drink': "rum and coke"
@@ -37,6 +54,7 @@ def confirmation(drink):
         return render_template('confirmation.html', **template_data)
 
     if drink == 'rainforest':
+        GPIO.output(24, GPIO.HIGH)
         template_data = {
             'title': web_title,
             'drink': "rainforest"
@@ -44,6 +62,7 @@ def confirmation(drink):
         return render_template('confirmation.html', **template_data)
 
     if drink == 'gin-and-tonic':
+        GPIO.output(25, GPIO.HIGH)
         template_data = {
             'title': web_title,
             'drink': "gin and tonic"
