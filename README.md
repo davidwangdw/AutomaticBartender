@@ -19,3 +19,7 @@ This starts the application at whatever IP address the Pi is currently at. To ge
 git pull
 sudo python3 app.py
 ```
+
+2. Set up the hardware
+
+This is a good video on how to set up the relays: https://www.youtube.com/watch?v=Ur0w7VeLX08
