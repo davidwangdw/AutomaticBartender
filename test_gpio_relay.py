@@ -5,7 +5,7 @@ import time
 GPIO.setmode(GPIO.BCM)
 
 # GPIO | Relay
-#--------------
+# --------------
 # 26     01
 # 19     02
 # 13     03
@@ -17,7 +17,7 @@ GPIO.setmode(GPIO.BCM)
 
 # initiate list with pin gpio pin numbers
 
-gpioList = [26, 19, 13, 06, 12, 16, 20, 21]
+gpioList = [26, 19, 13, 6, 12, 16, 20, 21]
 
 for i in gpioList:
     GPIO.setup(i, GPIO.OUT)
@@ -35,14 +35,14 @@ try:
     while True:
         for i in gpioList:
             GPIO.output(i, GPIO.LOW)
-            time.sleep(sleepTimeShort);
+            time.sleep(sleepTimeShort)
             GPIO.output(i, GPIO.HIGH)
-            time.sleep(sleepTimeLong);
+            time.sleep(sleepTimeLong)
 
 
 # End program cleanly with keyboard
 except KeyboardInterrupt:
-    print " Quit"
+    print("Quit")
 
     # Reset GPIO settings
 
