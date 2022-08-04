@@ -23,3 +23,5 @@ sudo python3 app.py
 2. Set up the hardware
 
 This is a good video on how to set up the relays: https://www.youtube.com/watch?v=Ur0w7VeLX08
+I've included a basic set up in schematics.fzz (WIP)
+
