@@ -15,7 +15,7 @@ liquid_sources_dict = {
 
 for pin in [6, 13]:
     GPIO.setup(pin, GPIO.OUT)
-    GPIO.output(pin, GPIO.LOW)
+    GPIO.output(pin, GPIO.HIGH)
 
 # http://mattrichardson.com/Raspberry-Pi-Flask/
 # https://learn.adafruit.com/adafruit-keg-bot?view=all
