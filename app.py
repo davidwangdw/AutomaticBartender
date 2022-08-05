@@ -70,44 +70,44 @@ def confirmation(drink):
 
 @app.route("/relay-1/start")
 def relay_1_start():
-    GPIO.output(6, GPIO.HIGH)
+    GPIO.output(6, GPIO.LOW)
     flash("relay 1 has started")
     return redirect('/')
 
 
 @app.route("/relay-1/stop")
 def relay_1_stop():
-    GPIO.output(6, GPIO.LOW)
+    GPIO.output(6, GPIO.HIGH)
     flash("relay 1 has stopped")
     return redirect('/')
 
 
 @app.route("/relay-2/start")
 def relay_2_start():
-    GPIO.output(13, GPIO.HIGH)
+    GPIO.output(13, GPIO.LOW)
     flash("relay 2 has started")
     return redirect('/')
 
 
 @app.route("/relay-2/stop")
 def relay_2_stop():
-    GPIO.output(13, GPIO.LOW)
+    GPIO.output(13, GPIO.HIGH)
     flash("relay 2 has stopped")
     return redirect('/')
 
 
 @app.route("/relay-1-2/start")
 def relay_1_2_start():
-    GPIO.output(6, GPIO.HIGH)
-    GPIO.output(13, GPIO.HIGH)
+    GPIO.output(6, GPIO.LOW)
+    GPIO.output(13, GPIO.LOW)
     flash("relay 1 and 2 has started")
     return redirect('/')
 
 
 @app.route("/relay-1-2/stop")
 def relay_1_2_stop():
-    GPIO.output(6, GPIO.LOW)
-    GPIO.output(13, GPIO.LOW)
+    GPIO.output(6, GPIO.HIGH)
+    GPIO.output(13, GPIO.HIGH)
     flash("relay 1 and 2 has stopped")
     return redirect('/')
 
