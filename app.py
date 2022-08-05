@@ -13,6 +13,14 @@ liquid_sources_dict = {
     'coke': 2
 }
 
+# recipe dict includes each kind of drink, and what ingredients are necessary, as well as their quantity
+recipe_dict = {
+    "rum-and-coke": {
+        "rum": 1,
+        "coke": 4
+    }
+}
+
 for pin in [6, 13]:
     GPIO.setup(pin, GPIO.OUT)
     GPIO.output(pin, GPIO.HIGH)
