@@ -1,3 +1,5 @@
+import time
+
 from flask import Flask, render_template, redirect, flash
 import datetime
 import RPi.GPIO as GPIO
@@ -9,8 +11,13 @@ GPIO.setmode(GPIO.BCM)
 
 # create dictionary for what drinks are connected to which tubes
 liquid_sources_dict = {
+    'vodka': 0,  # 0 represents not available
     'rum': 1,
     'coke': 2
+}
+gpio_to_relay_dict = {
+    1: 6,  # represents GPIO 6 is connected to relay 1
+    2: 13
 }
 
 # recipe dict includes each kind of drink, and what ingredients are necessary, as well as their quantity
@@ -57,6 +64,28 @@ def confirmation(drink):
             'drink': "rum and coke"
         }
         # TODO: put in a lock file to show that the device is currently in use
+
+        # this is how to make a drink
+        recipe = dict(recipe_dict['rum-and-coke'])
+
+        # make sure ingredients are available
+        assert 0 not in list(recipe.keys())  # TODO: handle this error somehow
+
+        time_elapsed = 0
+        longest_time_needed = max(recipe.values())
+        while time_elapsed <= longest_time_needed:
+            # close relays
+            relays_to_close = [ingredient for ingredient, time_left in recipe.items() if time_left > 0]
+            relays_to_open = [ingredient for ingredient, time_left in recipe.items() if time_left == 0]
+            for relay in relays_to_open:
+                # TODO: add open GPIO code once debugging shows it works
+                print(f'opening GPIO {gpio_to_relay_dict[liquid_sources_dict[relay]]}')
+            for relay in relays_to_close:
+                # TODO: add closing GPIO code once debugging shows it works
+                print(f'closing GPIO {gpio_to_relay_dict[liquid_sources_dict[relay]]}')
+                recipe[relay] -= 1
+            time.sleep(1)
+            time_elapsed += 1
         return render_template('confirmation.html', **template_data)
 
     if drink == 'rainforest':
