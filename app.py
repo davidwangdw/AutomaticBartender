@@ -8,6 +8,10 @@ import uuid
 app = Flask(__name__)
 app.secret_key = str(uuid.uuid4())
 GPIO.setmode(GPIO.BCM)
+gpio_to_relay_dict = {
+    1: 6,  # represents GPIO 6 is connected to relay 1
+    2: 13
+}
 
 # create dictionary for what drinks are connected to which tubes
 liquid_sources_dict = {
@@ -15,16 +19,14 @@ liquid_sources_dict = {
     'rum': 1,
     'coke': 2
 }
-gpio_to_relay_dict = {
-    1: 6,  # represents GPIO 6 is connected to relay 1
-    2: 13
-}
-
 # recipe dict includes each kind of drink, and what ingredients are necessary, as well as their quantity
 recipe_dict = {
     "rum-and-coke": {
-        "rum": 1,
-        "coke": 4
+        "description": "good old classic",
+        "ingredients": {
+            "rum": 1,
+            "coke": 4
+        }
     }
 }
 
@@ -48,11 +50,56 @@ web_title = "Welcome to 409!"
 def index():
     now = datetime.datetime.now()
     time_string = now.strftime("%Y-%m-%d %H:%M")
+
+    # create a drink list, which will be used in the template. also shows which drinks are available
+    drink_list_for_html = []
+    for drink, drink_info in recipe_dict.items():
+        recipe = drink_info['recipe']
+        recipe_valid = True
+        for ingredient in recipe.keys():
+            if liquid_sources_dict[ingredient] == 0:
+                # represents an ingredient not attached to a pump
+                recipe_valid = False
+
+        if recipe_valid:
+            # drink name, description, and status
+            drink_list_for_html.append(
+                [drink, drink_info['description'], 'Available']
+            )
+        else:
+            drink_list_for_html.append(
+                [drink, drink_info['description'], 'Missing Ingredients']
+            )
+
     template_data = {
         'title': web_title,
-        'time': time_string
+        'length': len(drink_list_for_html),
+        'drinks': drink_list_for_html
     }
     return render_template('main.html', **template_data)
+
+
+def make_drink(recipe):
+    relays_already_deactivated = set()
+
+    time_elapsed = 0
+    longest_time_needed = max(recipe.values())
+    while time_elapsed <= longest_time_needed:
+        # close relays
+        relays_to_activate = [ingredient for ingredient, time_left in recipe['ingredients'].items() if time_left > 0]
+        relays_to_deactivate = [ingredient for ingredient, time_left in recipe['ingredients'].items() if time_left == 0]
+        for relay in relays_to_deactivate:
+            # TODO: add open GPIO code once debugging shows it works
+            if relay not in relays_already_deactivated:
+                print(f'opening/deactivating GPIO {gpio_to_relay_dict[liquid_sources_dict[relay]]}')
+                relays_already_deactivated.add(relay)
+        for relay in relays_to_activate:
+            # TODO: add closing GPIO code once debugging shows it works
+            print(f'closing/activating GPIO {gpio_to_relay_dict[liquid_sources_dict[relay]]}')
+            recipe[relay] -= 1
+        time.sleep(1)
+        time_elapsed += 1
+        print(f'{time_elapsed} elapsed')
 
 
 @app.route("/confirmation/<drink>")
@@ -67,25 +114,8 @@ def confirmation(drink):
 
         # this is how to make a drink
         recipe = dict(recipe_dict['rum-and-coke'])
+        make_drink(recipe)
 
-        # make sure ingredients are available
-        assert 0 not in list(recipe.keys())  # TODO: handle this error somehow
-
-        time_elapsed = 0
-        longest_time_needed = max(recipe.values())
-        while time_elapsed <= longest_time_needed:
-            # close relays
-            relays_to_close = [ingredient for ingredient, time_left in recipe.items() if time_left > 0]
-            relays_to_open = [ingredient for ingredient, time_left in recipe.items() if time_left == 0]
-            for relay in relays_to_open:
-                # TODO: add open GPIO code once debugging shows it works
-                print(f'opening GPIO {gpio_to_relay_dict[liquid_sources_dict[relay]]}')
-            for relay in relays_to_close:
-                # TODO: add closing GPIO code once debugging shows it works
-                print(f'closing GPIO {gpio_to_relay_dict[liquid_sources_dict[relay]]}')
-                recipe[relay] -= 1
-            time.sleep(1)
-            time_elapsed += 1
         return render_template('confirmation.html', **template_data)
 
     if drink == 'rainforest':
@@ -105,48 +135,14 @@ def confirmation(drink):
         return render_template('confirmation.html', **template_data)
 
 
-@app.route("/relay-1/start")
-def relay_1_start():
-    GPIO.output(6, GPIO.LOW)
-    flash("relay 1 has started")
-    return redirect('/')
+def activate_relay(relay):
+    GPIO.output(relay, GPIO.LOW)
+    print(f'relay {relay} has been activated')
 
 
-@app.route("/relay-1/stop")
-def relay_1_stop():
-    GPIO.output(6, GPIO.HIGH)
-    flash("relay 1 has stopped")
-    return redirect('/')
-
-
-@app.route("/relay-2/start")
-def relay_2_start():
-    GPIO.output(13, GPIO.LOW)
-    flash("relay 2 has started")
-    return redirect('/')
-
-
-@app.route("/relay-2/stop")
-def relay_2_stop():
-    GPIO.output(13, GPIO.HIGH)
-    flash("relay 2 has stopped")
-    return redirect('/')
-
-
-@app.route("/relay-1-2/start")
-def relay_1_2_start():
-    GPIO.output(6, GPIO.LOW)
-    GPIO.output(13, GPIO.LOW)
-    flash("relay 1 and 2 has started")
-    return redirect('/')
-
-
-@app.route("/relay-1-2/stop")
-def relay_1_2_stop():
-    GPIO.output(6, GPIO.HIGH)
-    GPIO.output(13, GPIO.HIGH)
-    flash("relay 1 and 2 has stopped")
-    return redirect('/')
+def deactivate_relay(relay):
+    GPIO.output(relay, GPIO.HIGH)
+    print(f'relay {relay} has been deactivated')
 
 
 @app.route("/rum-and-coke")

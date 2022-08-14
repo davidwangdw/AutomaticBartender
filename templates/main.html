@@ -24,41 +24,24 @@
     {% endwith %}
     <body>
     <table class="table table-striped">
-        <tbody>
-            <tr>
-                <td><a href="/rum-and-coke" class="btn btn-primary" role="button">Rum and coke</a></td>
-                <td>A classic</td>
-                <td>Ordered 10 times</td>
-            </tr>
-            <tr>
-                <td><a href="/rainforest" class="btn btn-primary" role="button">Rainforest</a></td>
-                <td>A taste of tropical paradise</td>
-                <td>Ordered 194 times</td>
-            </tr>
-            <tr>
-                <td><a href="/gin-and-tonic" class="btn btn-primary" role="button">Gin and Tonic</a></td>
-                <td>If you like the taste of pine cones</td>
-                <td>Ordered 5 times</td>
-            </tr>
-            <tr>
-                <td><a href="/relay-1/start" class="btn btn-primary" role="button">Run Relay 1</a></td>
-            </tr>
-            <tr>
-                <td><a href="/relay-1/stop" class="btn btn-primary" role="button">Stop Relay 1</a></td>
-            </tr>
-            <tr>
-                <td><a href="/relay-2/start" class="btn btn-primary" role="button">Run Relay 2</a></td>
-            </tr>
-            <tr>
-                <td><a href="/relay-2/stop" class="btn btn-primary" role="button">Stop Relay 2</a></td>
-            </tr>
-            <tr>
-                <td><a href="/relay-1-2/start" class="btn btn-primary" role="button">Start both relay 1 and 2</a></td>
-            </tr>
-            <tr>
-                <td><a href="/relay-1-2/stop" class="btn btn-primary" role="button">Stop both relay 1 and 2</a></td>
-            </tr>
-        </tbody>
+       <!-- Table headers -->
+    <th>
+        <td>Drink</td>
+        <td>Description</td>
+            <td>Status</td>
+</tr>
+    </th>
+
+<!-- For loop logic of jinja template -->
+{%for i in range(0, length)%}
+
+<!-- table rows -->
+<tr>
+    <td><a href="{{'/order/%s'%a.drink_list_for_html[i][0]}}" class="btn btn-primary" role="button">{{drink_list_for_html[i][0}}</a></td>
+    <td>{{drink_list_for_html[i][1}}</td>
+    <td>{{drink_list_for_html[i][2}}</td>
+
+{%endfor%}
     </table>
 </body>
 </html>
