@@ -8,40 +8,34 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    The date and time is currently: {{ time }} <br> <br>
+    <br> <br>
     Welcome to David's bar! We're glad to have you. Would you like a drink?
     <br><br>
     What would you like to order? <br> <br>
-    </head>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul class=flashes>
-        {% for message in messages %}
-          <b>{{ message }}</b>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-    <body>
+</head>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class=flashes>
+    {% for message in messages %}
+    <b>{{ message }}</b>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+<body>
     <table class="table table-striped">
-       <!-- Table headers -->
-    <th>
-        <td>Drink</td>
-        <td>Description</td>
-            <td>Status</td>
-</tr>
-    </th>
-
-<!-- For loop logic of jinja template -->
-{%for i in range(0, length)%}
-
-<!-- table rows -->
-<tr>
-    <td><a href="/order/{{drinks[i][0]}}" class="btn btn-primary" role="button">{{drinks[i][0]}}</a></td>
-    <td>{{drinks[i][1]}}</td>
-    <td>{{drinks[i][2]}}</td>
-
-{%endfor%}
+        <!-- Table headers -->
+        <th>Drink</th>
+        <th>Description</th>
+        <th>Status</th>
+        <!-- For loop logic of jinja template -->
+        {%for i in range(0, length)%}
+        <!-- table rows -->
+        <tr>
+            <td><a href="/order/{{drinks[i][0]}}" class="btn btn-primary" role="button">{{drinks[i][0]}}</a></td>
+            <td>{{drinks[i][1]}}</td>
+            <td>{{drinks[i][2]}}</td>
+            {%endfor%}
     </table>
 </body>
 </html>
