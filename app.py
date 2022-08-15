@@ -10,7 +10,13 @@ app.secret_key = str(uuid.uuid4())
 GPIO.setmode(GPIO.BCM)
 gpio_to_relay_dict = {
     1: 6,  # represents GPIO 6 is connected to relay 1
-    2: 13
+    2: 13,
+    # 3: 19,
+    # 4: 26,
+    # 5: 12,
+    # 6: 16,
+    # 7: 20,
+    # 8: 21
 }
 
 # create dictionary for what drinks are connected to which tubes
@@ -58,6 +64,18 @@ for pin in [6, 13]:
 web_title = "Welcome to 409!"
 
 
+@app.route("/clean")
+def clean():
+    # activate all pumps
+    for pump, gpio_pin in gpio_to_relay_dict.items():
+        activate_relay(gpio_pin)
+
+    # wait 20 seconds to let the water move through
+    time.sleep(20)
+    for pump, gpio_pin in gpio_to_relay_dict.items():
+        deactivate_relay(gpio_pin)
+
+
 @app.route("/")
 def index():
     now = datetime.datetime.now()
@@ -98,7 +116,8 @@ def make_drink(recipe):
     longest_time_needed = max(recipe.values())
 
     # change recipe dict so that we replace the ingredient names with the relay number
-    recipe_with_relays = {gpio_to_relay_dict[liquid_sources_dict[ingredient]]: time_left for (ingredient, time_left) in recipe.items()}
+    recipe_with_relays = {gpio_to_relay_dict[liquid_sources_dict[ingredient]]: time_left for (ingredient, time_left) in
+                          recipe.items()}
     while time_elapsed < longest_time_needed:
         relays_to_activate = [relay for relay, time_left in recipe_with_relays.items() if time_left > 0]
         relays_to_deactivate = [relay for relay, time_left in recipe_with_relays.items() if time_left == 0]
