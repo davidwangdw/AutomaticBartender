@@ -111,6 +111,9 @@ def make_drink(recipe):
         time.sleep(1)
         time_elapsed += 1
         print(f'{time_elapsed} elapsed')
+    # deactivate all relays
+    for relay, _ in recipe_with_relays.items():
+        deactivate_relay(relay)
 
 
 @app.route("/order/<drink>")
