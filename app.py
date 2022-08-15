@@ -25,7 +25,7 @@ drink_dict = {
         "name": "Rum and Coke",
         "description": "good old classic",
         "recipe": {
-            "rum": 1,
+            "rum": 5,  # testing this value
             "coke": 4
         }
     },
@@ -98,11 +98,11 @@ def make_drink(recipe):
         relays_to_activate = [ingredient for ingredient, time_left in recipe.items() if time_left > 0]
         relays_to_deactivate = [ingredient for ingredient, time_left in recipe.items() if time_left == 0]
         for relay in relays_to_deactivate:
-            # TODO: add open GPIO code once debugging shows it works
             if relay not in relays_already_deactivated:
+                deactivate_relay(relay)
                 relays_already_deactivated.add(relay)
         for relay in relays_to_activate:
-            # TODO: add closing GPIO code once debugging shows it works
+            activate_relay(relay)
             recipe[relay] -= 1
         time.sleep(1)
         time_elapsed += 1
