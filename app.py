@@ -91,18 +91,16 @@ def make_drink(recipe):
         for relay in relays_to_deactivate:
             # TODO: add open GPIO code once debugging shows it works
             if relay not in relays_already_deactivated:
-                print(f'opening/deactivating GPIO {gpio_to_relay_dict[liquid_sources_dict[relay]]}')
                 relays_already_deactivated.add(relay)
         for relay in relays_to_activate:
             # TODO: add closing GPIO code once debugging shows it works
-            print(f'closing/activating GPIO {gpio_to_relay_dict[liquid_sources_dict[relay]]}')
             recipe[relay] -= 1
         time.sleep(1)
         time_elapsed += 1
         print(f'{time_elapsed} elapsed')
 
 
-@app.route("/confirmation/<drink>")
+@app.route("/order/<drink>")
 def confirmation(drink):
     if drink == 'rum-and-coke':
         # GPIO.output(23, GPIO.HIGH)
@@ -143,24 +141,6 @@ def activate_relay(relay):
 def deactivate_relay(relay):
     GPIO.output(relay, GPIO.HIGH)
     print(f'relay {relay} has been deactivated')
-
-
-@app.route("/rum-and-coke")
-def rum_coke():
-    print("you have ordered a rum and coke")
-    return redirect('/confirmation/rum-and-coke')
-
-
-@app.route("/rainforest")
-def rainforest():
-    print("you have ordered a rainforest")
-    return redirect('/confirmation/rainforest')
-
-
-@app.route("/gin-and-tonic")
-def gin_and_tonic():
-    print("you have ordered a gin and tonic")
-    return redirect('/confirmation/gin-and-tonic')
 
 
 if __name__ == "__main__":
