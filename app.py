@@ -86,8 +86,8 @@ def make_drink(recipe):
     longest_time_needed = max(recipe.values())
     while time_elapsed <= longest_time_needed:
         # close relays
-        relays_to_activate = [ingredient for ingredient, time_left in recipe['recipe'].items() if time_left > 0]
-        relays_to_deactivate = [ingredient for ingredient, time_left in recipe['recipe'].items() if time_left == 0]
+        relays_to_activate = [ingredient for ingredient, time_left in recipe.items() if time_left > 0]
+        relays_to_deactivate = [ingredient for ingredient, time_left in recipe.items() if time_left == 0]
         for relay in relays_to_deactivate:
             # TODO: add open GPIO code once debugging shows it works
             if relay not in relays_already_deactivated:
