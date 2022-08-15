@@ -128,6 +128,7 @@ def confirmation(drink):
 
         # this is how to make a drink
         recipe = dict(drink_dict['rum-and-coke']['recipe'])
+        flash('drink is being dispensed...')
         make_drink(recipe)
 
         return render_template('confirmation.html', **template_data)
