@@ -26,7 +26,7 @@ drink_dict = {
         "description": "good old classic",
         "recipe": {
             "rum": 5,  # testing this value
-            "coke": 4
+            "coke": 1
         }
     },
     "vodka-coke": {
@@ -94,9 +94,10 @@ def make_drink(recipe):
     time_elapsed = 0
     longest_time_needed = max(recipe.values())
     while time_elapsed <= longest_time_needed:
-        # close relays
         relays_to_activate = [ingredient for ingredient, time_left in recipe.items() if time_left > 0]
         relays_to_deactivate = [ingredient for ingredient, time_left in recipe.items() if time_left == 0]
+        print(f'relays to activate: {relays_to_activate}')
+        print(f'relays to deactivate: {relays_to_deactivate}')
         for relay in relays_to_deactivate:
             if relay not in relays_already_deactivated:
                 deactivate_relay(relay)
