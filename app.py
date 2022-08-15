@@ -27,6 +27,13 @@ drink_dict = {
             "rum": 1,
             "coke": 4
         }
+    },
+    "vodka-coke": {
+        "description": "like rum and coke, but with vodka",
+        "recipe": {
+            "vodka": 1,
+            "coke": 4
+        }
     }
 }
 
