@@ -93,9 +93,12 @@ def make_drink(recipe):
 
     time_elapsed = 0
     longest_time_needed = max(recipe.values())
-    while time_elapsed <= longest_time_needed:
-        relays_to_activate = [gpio_to_relay_dict[liquid_sources_dict[ingredient]] for ingredient, time_left in recipe.items() if time_left > 0]
-        relays_to_deactivate = [gpio_to_relay_dict[liquid_sources_dict[ingredient]] for ingredient, time_left in recipe.items() if time_left == 0]
+
+    # change recipe dict so that we replace the ingredient names with the relay number
+    recipe_with_relays = {gpio_to_relay_dict[liquid_sources_dict[ingredient]]: time_left for (ingredient, time_left) in recipe.items()}
+    while time_elapsed < longest_time_needed:
+        relays_to_activate = [relay for relay, time_left in recipe_with_relays.items() if time_left > 0]
+        relays_to_deactivate = [relay for relay, time_left in recipe_with_relays.items() if time_left == 0]
         print(f'relays to activate: {relays_to_activate}')
         print(f'relays to deactivate: {relays_to_deactivate}')
         for relay in relays_to_deactivate:
@@ -104,7 +107,7 @@ def make_drink(recipe):
                 relays_already_deactivated.add(relay)
         for relay in relays_to_activate:
             activate_relay(relay)
-            recipe[relay] -= 1
+            recipe_with_relays[relay] -= 1
         time.sleep(1)
         time_elapsed += 1
         print(f'{time_elapsed} elapsed')
