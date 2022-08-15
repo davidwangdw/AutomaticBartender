@@ -20,7 +20,7 @@ liquid_sources_dict = {
     'coke': 2
 }
 # recipe dict includes each kind of drink, and what ingredients are necessary, as well as their quantity
-recipe_dict = {
+drink_dict = {
     "rum-and-coke": {
         "description": "good old classic",
         "recipe": {
@@ -53,7 +53,7 @@ def index():
 
     # create a drink list, which will be used in the template. also shows which drinks are available
     drink_list_for_html = []
-    for drink, drink_info in recipe_dict.items():
+    for drink, drink_info in drink_dict.items():
         recipe = drink_info['recipe']
         recipe_valid = True
         for ingredient in recipe.keys():
@@ -111,7 +111,7 @@ def confirmation(drink):
         # TODO: put in a lock file to show that the device is currently in use
 
         # this is how to make a drink
-        recipe = dict(recipe_dict['rum-and-coke'])
+        recipe = dict(drink_dict['rum-and-coke']['recipe'])
         make_drink(recipe)
 
         return render_template('confirmation.html', **template_data)
