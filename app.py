@@ -22,6 +22,7 @@ liquid_sources_dict = {
 # recipe dict includes each kind of drink, and what ingredients are necessary, as well as their quantity
 drink_dict = {
     "rum-and-coke": {
+        "name": "Rum and Coke",
         "description": "good old classic",
         "recipe": {
             "rum": 1,
@@ -29,6 +30,7 @@ drink_dict = {
         }
     },
     "vodka-coke": {
+        "name": "Vodka Coke",
         "description": "like rum and coke, but with vodka",
         "recipe": {
             "vodka": 1,
@@ -71,11 +73,11 @@ def index():
         if recipe_valid:
             # drink name, description, and status
             drink_list_for_html.append(
-                [drink, drink_info['description'], 'Available']
+                [drink, drink_info['name'], drink_info['description'], 'Available']
             )
         else:
             drink_list_for_html.append(
-                [drink, drink_info['description'], 'Missing Ingredients']
+                [drink, drink_info['name'], drink_info['description'], 'Missing Ingredients']
             )
 
     template_data = {
