@@ -20,13 +20,16 @@ liquid_sources_dict = {
     'coke': 2
 }
 # recipe dict includes each kind of drink, and what ingredients are necessary, as well as their quantity
+# based on testing, a value of 20 here represents about 4.5oz of liquid
+# so, about a 6.7 is equivalent to roughly one shot. round to 7, we use integers and no need to be super precise
 drink_dict = {
     "rum-and-coke": {
+        # 5 parts coke to 2 parts rum
         "name": "Rum and Coke",
         "description": "good old classic",
         "recipe": {
-            "rum": 5,  # testing this value
-            "coke": 1
+            "rum": 7,
+            "coke": 18
         }
     },
     "vodka-coke": {
@@ -128,7 +131,6 @@ def confirmation(drink):
 
         # this is how to make a drink
         recipe = dict(drink_dict['rum-and-coke']['recipe'])
-        flash('drink is being dispensed...')
         make_drink(recipe)
 
         return render_template('confirmation.html', **template_data)
