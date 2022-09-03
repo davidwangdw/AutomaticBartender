@@ -11,9 +11,9 @@ GPIO.setmode(GPIO.BCM)
 gpio_to_relay_dict = {
     1: 6,  # represents GPIO 6 is connected to relay 1
     2: 13,
-    # 3: 19,
-    # 4: 26,
-    # 5: 12,
+    3: 19,
+    4: 26,
+    5: 12,
     # 6: 16,
     # 7: 20,
     # 8: 21
@@ -21,13 +21,19 @@ gpio_to_relay_dict = {
 
 # create dictionary for what drinks are connected to which tubes
 liquid_sources_dict = {
-    'vodka': 0,  # 0 represents not available
-    'rum': 1,
-    'coke': 2
+    'vodka': 1,  # 0 represents not available
+    'rum': 2,
+    'mango_juice': 3,
+    'midori': 4,
+    'blue_curacao': 5
 }
 # recipe dict includes each kind of drink, and what ingredients are necessary, as well as their quantity
 # based on testing, a value of 20 here represents about 4.5oz of liquid
 # so, about a 6.7 is equivalent to roughly one shot. round to 7, we use integers and no need to be super precise
+# another lesson: taking liquid out of soda makes a lot of bubbles. need to x3 the amount of soda
+# 7: 1.5oz
+# 5: 1oz
+# 3: 0.5oz
 drink_dict = {
     "rum-and-coke": {
         # 5 parts coke to 2 parts rum
@@ -35,7 +41,7 @@ drink_dict = {
         "description": "good old classic",
         "recipe": {
             "rum": 7,
-            "coke": 18
+            "coke": 60
         }
     },
     "vodka-coke": {
@@ -45,10 +51,20 @@ drink_dict = {
             "vodka": 1,
             "coke": 4
         }
+    },
+    "rainstorm": {
+        "name": "The Rainstorm",
+        "description": "Green juice",
+        "recipe": {
+            "vodka": 5,
+            "rum": 3,
+            "midori": 3,
+            "blue_curacao": 3
+        }
     }
 }
 
-for pin in [6, 13]:
+for pin in gpio_to_relay_dict.keys():
     GPIO.setup(pin, GPIO.OUT)
     GPIO.output(pin, GPIO.HIGH)
 
@@ -70,8 +86,8 @@ def clean():
     for pump, gpio_pin in gpio_to_relay_dict.items():
         activate_relay(gpio_pin)
 
-    # wait 20 seconds to let the water move through
-    time.sleep(20)
+    # wait to let the water move through
+    time.sleep(7)
     for pump, gpio_pin in gpio_to_relay_dict.items():
         deactivate_relay(gpio_pin)
 
