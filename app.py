@@ -172,12 +172,15 @@ def confirmation(drink):
 
         return render_template('confirmation.html', **template_data)
 
-    if drink == 'rainforest':
+    if drink == 'rainstorm':
         # GPIO.output(24, GPIO.HIGH)
         template_data = {
             'title': web_title,
-            'drink': "rainforest"
+            'drink': "rainstorm"
         }
+
+        recipe = dict(drink_dict['rainstorm']['recipe'])
+        make_drink(recipe)
         return render_template('confirmation.html', **template_data)
 
     if drink == 'gin-and-tonic':
