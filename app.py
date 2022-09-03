@@ -21,6 +21,7 @@ gpio_to_relay_dict = {
 
 # create dictionary for what drinks are connected to which tubes
 liquid_sources_dict = {
+    'coke': 0,
     'vodka': 1,  # 0 represents not available
     'rum': 2,
     'mango_juice': 3,
