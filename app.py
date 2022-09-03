@@ -66,7 +66,7 @@ drink_dict = {
     }
 }
 
-for pin in gpio_to_relay_dict.keys():
+for _, pin in gpio_to_relay_dict.items():
     GPIO.setup(pin, GPIO.OUT)
     GPIO.output(pin, GPIO.HIGH)
 
