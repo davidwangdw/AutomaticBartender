@@ -59,7 +59,8 @@ drink_dict = {
             "vodka": 5,
             "rum": 3,
             "midori": 3,
-            "blue_curacao": 3
+            "blue_curacao": 3,
+            "mango_juice": 20
         }
     }
 }
