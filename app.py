@@ -170,7 +170,7 @@ def confirmation(drink):
         recipe = dict(drink_dict['rum-and-coke']['recipe'])
         make_drink(recipe)
 
-        return render_template('confirmation.html', **template_data)
+        return redirect('/')
 
     if drink == 'rainstorm':
         # GPIO.output(24, GPIO.HIGH)
@@ -181,7 +181,7 @@ def confirmation(drink):
 
         recipe = dict(drink_dict['rainstorm']['recipe'])
         make_drink(recipe)
-        return render_template('confirmation.html', **template_data)
+        return redirect('/')
 
     if drink == 'gin-and-tonic':
         # GPIO.output(25, GPIO.HIGH)
@@ -189,7 +189,7 @@ def confirmation(drink):
             'title': web_title,
             'drink': "gin and tonic"
         }
-        return render_template('confirmation.html', **template_data)
+        return redirect('/')
 
 
 def activate_relay(relay):
