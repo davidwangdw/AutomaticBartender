@@ -39,7 +39,7 @@ drink_dict = {
     "rum-and-coke": {
         # 5 parts coke to 2 parts rum
         "name": "Rum and Coke",
-        "description": "good old classic",
+        "description": "a classic",
         "recipe": {
             "rum": 7,
             "coke": 60
@@ -55,7 +55,7 @@ drink_dict = {
     },
     "rainstorm": {
         "name": "The Rainstorm",
-        "description": "Green juice",
+        "description": "green juice",
         "recipe": {
             "vodka": 5,
             "rum": 3,
