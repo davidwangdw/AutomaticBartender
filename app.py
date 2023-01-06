@@ -54,8 +54,8 @@ drink_dict = {
         }
     },
     "rainstorm": {
-        "name": "The Rainstorm",
-        "description": "green juice",
+        "name": "Water",
+        "description": "just water",
         "recipe": {
             "vodka": 5,
             "rum": 3,
